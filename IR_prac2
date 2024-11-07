@@ -1,0 +1,40 @@
+ Implement a program for retrieval of documents using inverted files
+
+document1 = "The quick brown fox jumped over the lazy dog ."
+document2 = "The lazy dog slept in the sun ."
+
+tokens1 = document1.lower().split()
+tokens2 = document2.lower().split()
+
+terms = list(set(tokens1 + tokens2))
+
+inverted_index = {}
+
+for term in terms:
+    documents = []
+    if term in tokens1:
+        documents.append("Document 1")
+    if term in tokens2:
+        documents.append("Document 2")
+    inverted_index[term] = documents
+
+print("Inverted Index:")
+for term, documents in inverted_index.items():
+    print(term, "->", ", ".join(documents))
+
+query = input("\nEnter your search query: ").lower()  
+query_terms = query.split() 
+
+result_docs = set()  
+
+for term in query_terms:
+    if term in inverted_index:
+        result_docs.update(inverted_index[term]) 
+
+
+if result_docs:
+    print("\nDocuments matching the query:")
+    for doc in result_docs:
+        print(doc)
+else:
+    print("\nNo documents found for the query.")
